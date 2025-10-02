@@ -7,5 +7,5 @@ import java.util.List;
 public interface FlightService {
     Flight createFlight(Flight flight);
     List<Flight> getAllFlights();
-    Flight assignPad(String flightId);
+   // Flight assignPad(String flightId);
 }

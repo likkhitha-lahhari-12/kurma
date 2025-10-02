@@ -17,6 +17,7 @@ public class Pad {
     private String name;
     private PadStatus status;
     private String flightId;
+    private String vertiportId;
 
     public String getId() {
         return id;
@@ -32,6 +33,14 @@ public class Pad {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getVertiportId() {
+        return vertiportId;
+    }
+
+    public void setVertiportId(String vertiportId) {
+        this.vertiportId = vertiportId;
     }
 
     public PadStatus getStatus() {

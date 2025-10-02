@@ -31,19 +31,19 @@ public class FlightServiceImpl implements FlightService {
         return flightRepository.findAll();
     }
 
-    @Override
-    public Flight assignPad(String flightId) {
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("Flight not found: " + flightId));
-
-        Pad pad = padRepository.findFirstByStatus(PadStatus.FREE)
-                .orElseThrow(() -> new RuntimeException("No available pads!"));
-
-        pad.setStatus(PadStatus.OCCUPIED);
-        pad.setFlightId(flight.getId());
-        padRepository.save(pad);
-
-        flight.setPadId(pad.getId());
-        return flightRepository.save(flight);
-    }
+//    @Override
+//    public Flight assignPad(String flightId) {
+//        Flight flight = flightRepository.findById(flightId)
+//                .orElseThrow(() -> new RuntimeException("Flight not found: " + flightId));
+//
+//        Pad pad = padRepository.findFirstByStatus(PadStatus.FREE)
+//                .orElseThrow(() -> new RuntimeException("No available pads!"));
+//
+//        pad.setStatus(PadStatus.OCCUPIED);
+//        pad.setFlightId(flight.getId());
+//        padRepository.save(pad);
+//
+//        flight.setPadId(pad.getId());
+//        return flightRepository.save(flight);
+//    }
 }

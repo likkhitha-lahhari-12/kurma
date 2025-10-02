@@ -5,6 +5,7 @@ import com.fastflyrr.kurma.dto.PadResponseDto;
 import com.fastflyrr.kurma.mappers.PadMapper;
 import com.fastflyrr.kurma.models.Pad;
 import com.fastflyrr.kurma.repositories.PadRepository;
+import com.fastflyrr.kurma.services.PadService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,20 @@ import java.util.List;
 public class PadController {
 
     private final PadRepository padRepository;
-    private final PadMapper padMapper;
+   // private final PadMapper padMapper;
+    private final PadService padService;
 
-    public PadController(PadRepository padRepository, PadMapper padMapper){
+    public PadController(PadRepository padRepository, PadMapper padMapper, PadService padService){
         this.padRepository = padRepository;
-        this.padMapper = padMapper;
+        //this.padMapper = padMapper;
+        this.padService = padService;
     }
 
     //create a pad
-    @PostMapping
-    public ResponseEntity<PadResponseDto> createPad(
-            @Valid @RequestBody PadRequestDto padRequestDto){
-        Pad pad= padMapper.toEntity(padRequestDto);
-        Pad saved= padRepository.save(pad);
-        return ResponseEntity.ok(padMapper.toDto(saved));
+    @PostMapping("/add")
+    public ResponseEntity<Pad> createPad(@RequestBody Pad pad){
+        Pad createdPad= padService.createPad(pad);
+        return ResponseEntity.ok(createdPad);
     }
 
     //get all pads
