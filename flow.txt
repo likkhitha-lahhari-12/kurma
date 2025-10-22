@@ -1,0 +1,48 @@
+Vertiport details
+Pad details with vertiportId
+Flight documents with vertiportId
+
+---------endpoints-----------
+
+1. assignPad (In PadAssignmentService):
+- /assign/{flightId}
+- finds the flight with given flightId
+- finds a free pad (first free pad by VertiportId and status=free)
+- if free pad exists:
+    - changes pad status to "assigned"
+    - sets the flightId and PadId in both Pad and Flight objects
+    - saves both pad and flights
+- if free pad not exists:
+    - flight is saved to WaitingFlight repo with flightId and vertiportId
+
+
+2. mark the flight as landed (In FlightService):
+- /{flightId}/land
+- find the flight with given flightId
+- checks if PadId of that flight is null or not
+    - if not null (that means pad is assigned):
+        - set the status of the flight to "landed"
+        - find the pad and set its status to "occupied"
+        - save both pad and flight
+    - if null (that means pad is not assigned)
+        - //logic need to be added
+
+3. when the flight is departed (In FlightService):
+- /{flightId}/depart
+- find the flight wih given flightId
+- update the flight status to "departed"
+- Free up the assigned pad:
+    - find the padId (assigned pad) of the flight
+    - set pad status to "free" and flightId to null
+    - set padId of the flight to null
+    - save both flight and pad
+    - hit the free pad method (sending padId) in padAssignmentService
+- freePad method:
+    - find the pad by padId
+    - set pad status to "free" and flightId to null and save pad
+    - check for any waiting flights:
+        - in waitingFlightRepo, find first by vertiportId and createdAt, get the first flight
+        - assign the free pad to the next waiting flight by hitting assignPad(waitingFlightId)
+        - delete that flight from the waiting flight repo
+
+

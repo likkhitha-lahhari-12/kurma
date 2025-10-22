@@ -4,5 +4,8 @@ public enum PadStatus {
     FREE,
     OCCUPIED,
     MAINTENANCE,
-    BLOCKED
+    BLOCKED,
+    ASSIGNED
 }
+
+//Flow: free-> assigned-> occupied-> free
